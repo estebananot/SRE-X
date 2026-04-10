@@ -1,0 +1,18 @@
+services:
+  sre-copilot:
+    build: .
+    container_name: sre-copilot
+    env_file: .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+  sre-copilot-cli:
+    build: .
+    container_name: sre-copilot-cli
+    env_file: .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    stdin_open: true
+    tty: true
+    command: python scripts/cli.py
