@@ -1,0 +1,146 @@
+{
+  "payment-api": {
+    "service": "payment-api",
+    "metrics": {
+      "cpu_percent": {
+        "current": 89,
+        "trend": "spiking",
+        "values_1h": [45, 48, 52, 61, 70, 78, 85, 89]
+      },
+      "memory_percent": {
+        "current": 92,
+        "limit_mb": 512,
+        "used_mb": 471,
+        "trend": "critical",
+        "values_1h": [55, 60, 65, 72, 80, 85, 90, 92]
+      },
+      "latency_p50_ms": 120,
+      "latency_p95_ms": 850,
+      "latency_p99_ms": 3200,
+      "error_rate_percent": 15.3,
+      "request_rate_rps": 450,
+      "restart_count": 3,
+      "oom_kills": 1
+    },
+    "status": "degraded"
+  },
+  "auth-service": {
+    "service": "auth-service",
+    "metrics": {
+      "cpu_percent": {
+        "current": 35,
+        "trend": "stable",
+        "values_1h": [30, 32, 33, 34, 35, 33, 34, 35]
+      },
+      "memory_percent": {
+        "current": 68,
+        "limit_mb": 256,
+        "used_mb": 174,
+        "trend": "stable",
+        "values_1h": [60, 62, 64, 65, 67, 68, 68, 68]
+      },
+      "latency_p50_ms": 2500,
+      "latency_p95_ms": 15000,
+      "latency_p99_ms": 30000,
+      "error_rate_percent": 42.8,
+      "request_rate_rps": 120,
+      "active_db_connections": 200,
+      "max_db_connections": 200,
+      "pending_connection_requests": 47
+    },
+    "status": "critical"
+  },
+  "frontend-web": {
+    "service": "frontend-web",
+    "metrics": {
+      "cpu_percent": {
+        "current": 25,
+        "trend": "stable",
+        "values_1h": [22, 23, 25, 24, 25, 25, 24, 25]
+      },
+      "memory_percent": {
+        "current": 45,
+        "limit_mb": 128,
+        "used_mb": 57,
+        "trend": "stable",
+        "values_1h": [40, 42, 44, 44, 45, 45, 45, 45]
+      },
+      "latency_p50_ms": 500,
+      "latency_p95_ms": 2500,
+      "latency_p99_ms": 5200,
+      "error_rate_percent": 8.2,
+      "upstream_errors_percent": 12.5,
+      "request_rate_rps": 800
+    },
+    "status": "degraded"
+  },
+  "order-processor": {
+    "service": "order-processor",
+    "metrics": {
+      "cpu_percent": {
+        "current": 72,
+        "trend": "increasing",
+        "values_1h": [30, 35, 42, 50, 58, 65, 70, 72]
+      },
+      "memory_percent": {
+        "current": 55,
+        "limit_mb": 256,
+        "used_mb": 140,
+        "trend": "stable",
+        "values_1h": [50, 51, 52, 53, 54, 55, 55, 55]
+      },
+      "disk_usage_percent": 98,
+      "disk_total_gb": 50,
+      "disk_used_gb": 49,
+      "error_rate_percent": 22.0,
+      "queue_depth": 15430,
+      "request_rate_rps": 50
+    },
+    "status": "critical"
+  },
+  "inventory-service": {
+    "service": "inventory-service",
+    "metrics": {
+      "cpu_percent": {
+        "current": 5,
+        "trend": "inactive",
+        "values_1h": [15, 12, 8, 5, 2, 5, 3, 5]
+      },
+      "memory_percent": {
+        "current": 40,
+        "limit_mb": 128,
+        "used_mb": 51,
+        "trend": "stable",
+        "values_1h": [38, 39, 40, 40, 40, 40, 40, 40]
+      },
+      "restart_count": 7,
+      "crash_loop": true,
+      "error_rate_percent": 100,
+      "request_rate_rps": 0
+    },
+    "status": "down"
+  },
+  "db-primary": {
+    "service": "db-primary",
+    "metrics": {
+      "cpu_percent": {
+        "current": 78,
+        "trend": "high",
+        "values_1h": [40, 45, 50, 55, 62, 70, 75, 78]
+      },
+      "memory_percent": {
+        "current": 82,
+        "limit_mb": 1024,
+        "used_mb": 839,
+        "trend": "increasing",
+        "values_1h": [55, 60, 65, 70, 75, 78, 80, 82]
+      },
+      "active_connections": 210,
+      "max_connections": 200,
+      "queries_per_second": 350,
+      "slow_queries_count": 15,
+      "replication_lag_seconds": 2.5
+    },
+    "status": "critical"
+  }
+}

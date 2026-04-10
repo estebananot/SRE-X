@@ -1,0 +1,9 @@
+langchain>=1.2.0
+langchain-openai>=1.1.0
+langchain-community>=0.4.0
+pydantic>=2.0
+pydantic-settings>=2.10
+python-dotenv>=1.0
+docker>=7.0
+slack-bolt>=1.18.0
+slack-sdk>=3.27.0

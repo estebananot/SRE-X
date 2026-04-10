@@ -1,0 +1,214 @@
+[
+  {
+    "timestamp": "2026-04-09T10:15:03Z",
+    "level": "ERROR",
+    "service": "payment-api",
+    "message": "java.lang.OutOfMemoryError: Java heap space",
+    "host": "prod-app-03",
+    "container_id": "abc123def456",
+    "trace_id": "trace-001"
+  },
+  {
+    "timestamp": "2026-04-09T10:15:05Z",
+    "level": "ERROR",
+    "service": "payment-api",
+    "message": "Container payment-api-7d8f9c exited with code 137 (OOMKilled)",
+    "host": "prod-app-03",
+    "container_id": "abc123def456",
+    "trace_id": "trace-001"
+  },
+  {
+    "timestamp": "2026-04-09T10:15:10Z",
+    "level": "WARN",
+    "service": "payment-api",
+    "message": "Restarting container payment-api-7d8f9c (attempt 3/5)",
+    "host": "prod-app-03",
+    "container_id": "abc123def456",
+    "trace_id": "trace-001"
+  },
+  {
+    "timestamp": "2026-04-09T10:14:58Z",
+    "level": "WARN",
+    "service": "payment-api",
+    "message": "Memory usage at 92% (limit: 512Mi, used: 471Mi)",
+    "host": "prod-app-03",
+    "container_id": "abc123def456",
+    "trace_id": "trace-001"
+  },
+  {
+    "timestamp": "2026-04-09T10:14:30Z",
+    "level": "INFO",
+    "service": "payment-api",
+    "message": "GC pause 450ms (G1 Young Generation) heap: 480Mi/512Mi",
+    "host": "prod-app-03",
+    "container_id": "abc123def456",
+    "trace_id": "trace-001"
+  },
+
+  {
+    "timestamp": "2026-04-09T11:30:00Z",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Connection pool exhausted: unable to acquire connection to db-primary.internal (timeout=30s)",
+    "host": "prod-app-01",
+    "container_id": "ghi789jkl012",
+    "trace_id": "trace-002"
+  },
+  {
+    "timestamp": "2026-04-09T11:30:05Z",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "HikariPool-1 - Connection is not available, request timed out after 30000ms",
+    "host": "prod-app-01",
+    "container_id": "ghi789jkl012",
+    "trace_id": "trace-002"
+  },
+  {
+    "timestamp": "2026-04-09T11:30:10Z",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Health check failed: /health/db returned 503",
+    "host": "prod-app-01",
+    "container_id": "ghi789jkl012",
+    "trace_id": "trace-002"
+  },
+  {
+    "timestamp": "2026-04-09T11:29:45Z",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Active connections: 200/200 (pool max), pending requests: 47",
+    "host": "prod-app-01",
+    "container_id": "ghi789jkl012",
+    "trace_id": "trace-002"
+  },
+  {
+    "timestamp": "2026-04-09T11:29:00Z",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Request completed: POST /api/v1/auth/login - 503 in 30234ms",
+    "host": "prod-app-01",
+    "container_id": "ghi789jkl012",
+    "trace_id": "trace-002"
+  },
+
+  {
+    "timestamp": "2026-04-09T09:45:00Z",
+    "level": "ERROR",
+    "service": "frontend-web",
+    "message": "Failed to connect to upstream: payment-api.prod.svc (ECONNREFUSED 10.0.3.15:8080)",
+    "host": "prod-app-02",
+    "container_id": "mno345pqr678",
+    "trace_id": "trace-003"
+  },
+  {
+    "timestamp": "2026-04-09T09:45:05Z",
+    "level": "WARN",
+    "service": "frontend-web",
+    "message": "Retrying upstream connection to payment-api (attempt 2/3)",
+    "host": "prod-app-02",
+    "container_id": "mno345pqr678",
+    "trace_id": "trace-003"
+  },
+  {
+    "timestamp": "2026-04-09T09:45:15Z",
+    "level": "ERROR",
+    "service": "frontend-web",
+    "message": "502 Bad Gateway: all 3 retries exhausted for payment-api",
+    "host": "prod-app-02",
+    "container_id": "mno345pqr678",
+    "trace_id": "trace-003"
+  },
+
+  {
+    "timestamp": "2026-04-09T14:00:00Z",
+    "level": "ERROR",
+    "service": "order-processor",
+    "message": "No space left on device: cannot write to /data/queue (errno=28)",
+    "host": "prod-app-04",
+    "container_id": "stu901vwx234",
+    "trace_id": "trace-004"
+  },
+  {
+    "timestamp": "2026-04-09T14:00:05Z",
+    "level": "WARN",
+    "service": "order-processor",
+    "message": "Disk usage at 98% (/dev/sda1 49Gi/50Gi)",
+    "host": "prod-app-04",
+    "container_id": "stu901vwx234",
+    "trace_id": "trace-004"
+  },
+  {
+    "timestamp": "2026-04-09T14:00:10Z",
+    "level": "ERROR",
+    "service": "order-processor",
+    "message": "Failed to persist order ORDER-78432: IOError - disk full",
+    "host": "prod-app-04",
+    "container_id": "stu901vwx234",
+    "trace_id": "trace-004"
+  },
+
+  {
+    "timestamp": "2026-04-09T16:20:00Z",
+    "level": "ERROR",
+    "service": "inventory-service",
+    "message": "CrashLoopBackOff: container exited with code 1 - configmap 'inventory-config' not found",
+    "host": "prod-app-05",
+    "container_id": "yza567bcd890",
+    "trace_id": "trace-005"
+  },
+  {
+    "timestamp": "2026-04-09T16:20:05Z",
+    "level": "WARN",
+    "service": "inventory-service",
+    "message": "Container restart count: 7, last state: Terminated (Error, exit code 1)",
+    "host": "prod-app-05",
+    "container_id": "yza567bcd890",
+    "trace_id": "trace-005"
+  },
+  {
+    "timestamp": "2026-04-09T16:19:50Z",
+    "level": "ERROR",
+    "service": "inventory-service",
+    "message": "Failed to load config: ConfigMap 'inventory-config' not found in namespace 'production'",
+    "host": "prod-app-05",
+    "container_id": "yza567bcd890",
+    "trace_id": "trace-005"
+  },
+
+  {
+    "timestamp": "2026-04-09T08:00:00Z",
+    "level": "INFO",
+    "service": "payment-api",
+    "message": "Server started on port 8080, heap max: 512Mi",
+    "host": "prod-app-03",
+    "container_id": "abc123def456",
+    "trace_id": "trace-001"
+  },
+  {
+    "timestamp": "2026-04-09T08:05:00Z",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Server started on port 8081, pool max: 200 connections",
+    "host": "prod-app-01",
+    "container_id": "ghi789jkl012",
+    "trace_id": "trace-002"
+  },
+  {
+    "timestamp": "2026-04-09T11:29:10Z",
+    "level": "WARN",
+    "service": "db-primary",
+    "message": "Too many connections: 210 (max_connections=200), killing idle connections",
+    "host": "prod-db-01",
+    "container_id": "db001primary",
+    "trace_id": "trace-002"
+  },
+  {
+    "timestamp": "2026-04-09T11:29:15Z",
+    "level": "ERROR",
+    "service": "db-primary",
+    "message": "FATAL: sorry, too many clients already",
+    "host": "prod-db-01",
+    "container_id": "db001primary",
+    "trace_id": "trace-002"
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "alert-001",
+    "severity": "critical",
+    "status": "firing",
+    "service": "payment-api",
+    "title": "OOMKill Detected - Container Terminated",
+    "description": "Container payment-api-7d8f9c was killed due toOutOfMemory (exit code 137). Memory limit: 512Mi, last reported usage: 471Mi (92%).",
+    "fired_at": "2026-04-09T10:15:05Z",
+    "labels": {
+      "team": "payments",
+      "env": "production",
+      "alert_type": "oom_kill",
+      "impact": "customer_facing"
+    }
+  },
+  {
+    "id": "alert-002",
+    "severity": "critical",
+    "status": "firing",
+    "service": "auth-service",
+    "title": "Database Connection Pool Exhausted",
+    "description": "auth-service cannot acquire database connections. Pool exhausted: 200/200 active connections, 47 requests pending. Health check returning 503.",
+    "fired_at": "2026-04-09T11:30:10Z",
+    "labels": {
+      "team": "platform",
+      "env": "production",
+      "alert_type": "connection_pool_exhausted",
+      "impact": "customer_facing"
+    }
+  },
+  {
+    "id": "alert-003",
+    "severity": "warning",
+    "status": "firing",
+    "service": "frontend-web",
+    "title": "Upstream Connection Failures",
+    "description": "502 errors increasing on frontend-web. 3/3 retries exhausted connecting to payment-api upstream. Error rate: 8.2%.",
+    "fired_at": "2026-04-09T09:45:15Z",
+    "labels": {
+      "team": "frontend",
+      "env": "production",
+      "alert_type": "upstream_failure",
+      "impact": "customer_facing"
+    }
+  },
+  {
+    "id": "alert-004",
+    "severity": "critical",
+    "status": "firing",
+    "service": "order-processor",
+    "title": "Disk Space Critical - No Space Left",
+    "description": "Disk usage at 98% on order-processor host prod-app-04 (/dev/sda1 49Gi/50Gi). Writes failing with ENOSPC. Queue depth: 15430 messages pending.",
+    "fired_at": "2026-04-09T14:00:10Z",
+    "labels": {
+      "team": "orders",
+      "env": "production",
+      "alert_type": "disk_full",
+      "impact": "data_loss_risk"
+    }
+  },
+  {
+    "id": "alert-005",
+    "severity": "critical",
+    "status": "firing",
+    "service": "inventory-service",
+    "title": "CrashLoopBackOff - Config Missing",
+    "description": "inventory-service in CrashLoopBackOff state. Container has restarted 7 times. Error: ConfigMap 'inventory-config' not found in namespace 'production'.",
+    "fired_at": "2026-04-09T16:20:05Z",
+    "labels": {
+      "team": "inventory",
+      "env": "production",
+      "alert_type": "crash_loop",
+      "impact": "service_down"
+    }
+  },
+  {
+    "id": "alert-006",
+    "severity": "warning",
+    "status": "firing",
+    "service": "db-primary",
+    "title": "Too Many Database Connections",
+    "description": "db-primary has 210 active connections (max: 200). New connection attempts failing with FATAL: too many clients. Replication lag: 2.5s.",
+    "fired_at": "2026-04-09T11:29:15Z",
+    "labels": {
+      "team": "platform",
+      "env": "production",
+      "alert_type": "db_overload",
+      "impact": "cascading_failure_risk"
+    }
+  }
+]
