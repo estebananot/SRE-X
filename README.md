@@ -5,13 +5,13 @@ An AI-powered SRE Copilot that automates incident triage and diagnosis, reducing
 ## Architecture
 
 ```
-[Slack CLI / CLI] -> [Bot Handler] -> [SRE Agent (LangGraph ReAct)] -> [OpenRouter LLM]
-                                            |
-                        +-------------------+-------------------+
-                        |                   |                   |
-                  [Simulated Data]    [Real Logs]        [Docker API]
-                  (logs, metrics,     (LogPAI/           (inspect,
-                   alerts)             Loghub)             restart)
+[Slack / CLI] -> [Bot Handler] -> [SRE Agent (LangGraph ReAct)] -> [OpenRouter LLM]
+                                        |
+                    +-------------------+-------------------+
+                    |                   |                   |
+              [Simulated Data]    [Real Logs]        [Docker API]
+              (logs, metrics,     (LogPAI/           (inspect,
+               alerts)             Loghub)             restart)
 ```
 
 ## Key Features
@@ -25,49 +25,62 @@ An AI-powered SRE Copilot that automates incident triage and diagnosis, reducing
 
 ## Quick Start
 
-### 1. Install Dependencies
+### Option A: Docker (Recommended)
 
 ```bash
+# 1. Clone the repo
+git clone https://github.com/estebananot/SRE-X.git
+cd SRE-X
+
+# 2. Configure environment
+cp .env.example .env
+# Edit .env with your API keys (at minimum OPENROUTER_API_KEY)
+
+# 3. Build and run the demo
+docker compose run sre-copilot python scripts/run_demo.py
+
+# 4. Or launch the Slack bot
+docker compose up sre-copilot
+```
+
+The Docker image includes all dependencies and downloads the open-source log datasets automatically during build. The Docker socket is mounted so the agent can inspect and manage containers on the host.
+
+### Option B: Local Installation
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/estebananot/SRE-X.git
+cd SRE-X
+
+# 2. Install dependencies
 pip install -r requirements.txt
-```
 
-Or install manually:
-
-```bash
-pip install langchain langchain-openai langchain-community pydantic python-dotenv docker slack-bolt slack-sdk
-```
-
-### 2. Configure Environment
-
-```bash
+# 3. Configure environment
 cp .env.example .env
 # Edit .env with your API keys
-```
 
-Required in `.env`:
-- `OPENROUTER_API_KEY` - Get one at https://openrouter.ai/keys
-- `OPENROUTER_MODEL` - Default: `openai/gpt-4o-mini`
-- `SLACK_BOT_TOKEN` - For Slack integration (optional)
-- `SLACK_APP_TOKEN` - For Socket Mode (optional)
-- `SLACK_SIGNING_SECRET` - For Slack integration (optional)
-
-### 3. Download Open-Source Logs
-
-```bash
+# 4. Download open-source logs (HDFS, Spark, Hadoop, Zookeeper)
 python scripts/download_logs.py
-```
 
-Downloads real production logs from HDFS, Spark, Hadoop, and Zookeeper (Stanford LogPAI/Loghub).
-
-### 4. Run the Demo
-
-```bash
+# 5. Run the demo
 python scripts/run_demo.py
 ```
 
-This runs the full end-to-end demo with MTTR comparison.
+### Environment Variables
 
-### 5. CLI Mode
+Required in `.env`:
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `OPENROUTER_API_KEY` | API key from https://openrouter.ai/keys | Yes |
+| `OPENROUTER_MODEL` | Model to use (default: `openai/gpt-4o-mini`) | No |
+| `SLACK_BOT_TOKEN` | Slack bot token (`xoxb-...`) | For Slack bot |
+| `SLACK_APP_TOKEN` | Slack app-level token (`xapp-...`) | For Slack bot |
+| `SLACK_SIGNING_SECRET` | Slack signing secret | For Slack bot |
+
+## Usage
+
+### CLI Mode
 
 ```bash
 python scripts/cli.py
@@ -80,7 +93,13 @@ Commands:
 - `chat <message>` - Free-form question
 - `quit` - Exit
 
-### 6. Slack Bot
+### Docker CLI
+
+```bash
+docker compose run sre-copilot-cli
+```
+
+### Slack Bot
 
 Set up your Slack app at https://api.slack.com/apps:
 
@@ -93,20 +112,25 @@ Set up your Slack app at https://api.slack.com/apps:
 7. Install app to workspace
 8. Copy tokens to `.env`
 
-Run:
+Run with Docker:
+```bash
+docker compose up sre-copilot
+```
+
+Or locally:
 ```bash
 python bot/slack_bot.py
 ```
 
-### 7. Incident Simulation (requires Docker)
+### Incident Simulation (requires Docker)
 
 ```bash
-python scripts/simulate_incident.py setup    # Create demo containers
-python scripts/simulate_incident.py memory   # Simulate OOM incident
-python scripts/simulate_incident.py disk     # Simulate disk full
+python scripts/simulate_incident.py setup     # Create demo containers
+python scripts/simulate_incident.py memory    # Simulate OOM incident
+python scripts/simulate_incident.py disk      # Simulate disk full
 python scripts/simulate_incident.py crashloop # Simulate crash loop
-python scripts/simulate_incident.py cleanup  # Remove demo containers
-python scripts/simulate_incident.py full     # Setup + memory scenario
+python scripts/simulate_incident.py cleanup   # Remove demo containers
+python scripts/simulate_incident.py full      # Setup + memory scenario
 ```
 
 ## Project Structure
@@ -115,29 +139,32 @@ python scripts/simulate_incident.py full     # Setup + memory scenario
 sre-copilot/
   agent/
     prompts.py          # SRE system prompt with structured reasoning
-    sre_agent.py        # LangGraph ReAct agent
-    tools.py            # 9 LangChain tools (logs, metrics, alerts, Docker, open-source logs)
-    triage.py           # IncidentTriage orchestrator
+    sre_agent.py         # LangGraph ReAct agent
+    tools.py             # 9 LangChain tools (logs, metrics, alerts, Docker, open-source logs)
+    triage.py            # IncidentTriage orchestrator
   bot/
-    slack_bot.py        # Slack bot with Socket Mode
+    slack_bot.py         # Slack bot with Socket Mode
   config/
-    settings.py         # Pydantic settings from .env
+    settings.py          # Pydantic settings from .env
   data/
-    sample_alerts.json  # 6 PagerDuty-style alerts (OOM, conn pool, upstream, disk, crash loop, db overload)
-    sample_logs.json    # 22 log entries across 6 services
-    sample_metrics.json # Time-series metrics for 6 services
-    raw_logs/           # Real production logs from LogPAI/Loghub (downloaded separately)
+    sample_alerts.json   # 6 PagerDuty-style alerts
+    sample_logs.json     # 22 log entries across 6 services
+    sample_metrics.json  # Time-series metrics for 6 services
+    raw_logs/            # Real production logs from LogPAI/Loghub
   scripts/
-    cli.py              # Interactive CLI
-    run_demo.py         # End-to-end demo with MTTR comparison
-    simulate_incident.py # Docker-based incident simulation
-    download_logs.py     # Download open-source logs
-    test_connection.py   # Test OpenRouter connection
+    cli.py               # Interactive CLI
+    run_demo.py           # End-to-end demo with MTTR comparison
+    simulate_incident.py  # Docker-based incident simulation
+    download_logs.py      # Download open-source logs
+    test_connection.py    # Test OpenRouter connection
   tools/
-    data_sources.py     # Unified data source manager
-    docker_tool.py      # Docker SDK wrapper
-    log_parser.py       # Parser for HDFS, Spark, Hadoop, Zookeeper logs
-  .env.example
+    data_sources.py       # Unified data source manager
+    docker_tool.py         # Docker SDK wrapper
+    log_parser.py          # Parser for HDFS, Spark, Hadoop, Zookeeper logs
+  Dockerfile              # Multi-stage Docker build
+  docker-compose.yml      # Docker Compose for one-command deployment
+  requirements.txt        # Python dependencies
+  .env.example            # Environment template
   .gitignore
 ```
 
@@ -164,7 +191,7 @@ For every incident, the agent follows this structured chain-of-thought:
 
 ## Tech Stack
 
-- **Python 3.11+** with LangChain/LangGraph (ReAct agent)
+- **Python 3.12+** with LangChain/LangGraph (ReAct agent)
 - **OpenRouter API** (GPT-4o-mini) for LLM inference
 - **Slack Bolt** for Slack integration with Socket Mode
 - **Docker SDK** for container inspection and remediation
